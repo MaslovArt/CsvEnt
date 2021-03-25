@@ -1,0 +1,5 @@
+﻿Int;NullInt;Double;NullDouble;Bool;NullBool;Date;NullDate;String;Enum
+1;1;2,5;2,5;True;False;20.02.2020;20.02.2020;abc;Value1
+1;;2,5;;True;;20.02.2020;;abc;Value2
+1;1;2,5;2,5;True;False;20.02.2020;20.02.2020;abc;Value1
+1;;2,5;;True;;20.02.2020;;abc;Value2

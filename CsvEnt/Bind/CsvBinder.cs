@@ -24,6 +24,8 @@ namespace CsvEnt.Bind
         /// </summary>
         public List<CsvBindException> Errors { get; private set; }
 
+        private int MaxRow => _take + _skip;
+
         public CsvBinder()
         {
             Errors = new List<CsvBindException>();
@@ -50,7 +52,7 @@ namespace CsvEnt.Bind
         /// <returns></returns>
         public CsvBinder<T> Take(int count)
         {
-            CheckValue(count, 0);
+            CheckValue(count, 1);
             _take = count;
 
             return this;
@@ -63,7 +65,7 @@ namespace CsvEnt.Bind
         /// <returns></returns>
         public CsvBinder<T> Skip(int count)
         {
-            CheckValue(count, 0);
+            CheckValue(count, 1);
             _skip = count;
 
             return this;
@@ -105,29 +107,38 @@ namespace CsvEnt.Bind
         {
             using (StreamReader sr = new StreamReader(csvFilePath))
             {
+                var entities = new List<T>();
                 var currentLineInd = 0;
-                while (currentLineInd < _take + _skip && sr.Peek() >= 0)
+
+                while (sr.Peek() >= 0 && !(_take > 0 && currentLineInd >= MaxRow))
                 {
                     var currentLineStr = sr.ReadLine();
 
-                    if (currentLineInd < _skip) continue;
+                    if (currentLineInd < _skip)
+                    {
+                        currentLineInd++;
+                        continue;
+                    }
 
                     var currentLine = currentLineStr.Split(_separator);
 
                     var newEntity = new T();
+                    var succesMap = true;
                     foreach (var rule in _rules)
                     {
-                        SetEntityValue(newEntity, rule, currentLine, currentLineInd);
+                        succesMap &= TrySetEntityValue(newEntity, rule, currentLine, currentLineInd);
                     }
+                    if (!succesMap) continue;
+                    entities.Add(newEntity);
 
                     currentLineInd++;
                 }
-            }
 
-            return null;
+                return entities.ToArray();
+            }
         }
 
-        private void SetEntityValue(T entity, BindRule rule, string[] columnValues, int rowInd)
+        private bool TrySetEntityValue(T entity, BindRule rule, string[] columnValues, int rowInd)
         {
             try
             {
@@ -135,14 +146,18 @@ namespace CsvEnt.Bind
                 var mappedValue = rule.Map(columnValue);
 
                 rule.Prop.SetValue(entity, mappedValue);
+
+                return true;
             }
             catch (Exception ex)
             {
                 var bindEx = new CsvBindException(columnValues, rowInd, rule.ColInd, ex);
+
                 if (_continueOrError)
                 {
                     Errors.Add(bindEx);
-                    return;
+
+                    return false;
                 }
 
                 throw bindEx;
