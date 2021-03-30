@@ -27,8 +27,8 @@ namespace CsvEnt.Tests
                     .AddRule(e => e.NullDouble, 3)
                     .AddRule(e => e.Bool, 4)
                     .AddRule(e => e.NullBool, 5)
-                    .AddRule(e => e.Date, 6, v => ((DateTime)v).ToString("dd.MM.yyyy"))
-                    .AddRule(e => e.NullDate, 7, v => ((DateTime?)v)?.ToString("dd.MM.yyyy"))
+                    .AddRule(e => e.Date, 6, v => v.ToString("dd.MM.yyyy"))
+                    .AddRule(e => e.NullDate, 7, v => v?.ToString("dd.MM.yyyy"))
                     .AddRule(e => e.String, 8)
                     .AddRule(e => e.Enum, 9)
                     .AddColumnsTitles(new string[]
