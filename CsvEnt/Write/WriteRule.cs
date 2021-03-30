@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace CsvEnt.Write
 {
@@ -7,10 +8,11 @@ namespace CsvEnt.Write
     /// </summary>
     internal class WriteRule
     {
-        internal WriteRule(int excelColInd, PropertyInfo prop)
+        internal WriteRule(int excelColInd, PropertyInfo prop, Func<object, string> map)
         {
             ColInd = excelColInd;
             Prop = prop;
+            Map = map;
         }
 
         /// <summary>
@@ -22,5 +24,10 @@ namespace CsvEnt.Write
         /// Csv row column index
         /// </summary>
         internal int ColInd { get; set; }
+
+        /// <summary>
+        /// Entity prop to csv value
+        /// </summary>
+        internal Func<object, string> Map { get; set; }
     }
 }

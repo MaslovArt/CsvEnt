@@ -14,7 +14,7 @@ namespace CsvEnt.Bind
     public class CsvBinder<T> where T : new()
     {
         private bool            _continueOrError;
-        private char            _separator;
+        private char            _delimiter;
         private int             _skip;
         private int             _take;
         private List<BindRule>  _rules;
@@ -30,7 +30,7 @@ namespace CsvEnt.Bind
         {
             Errors = new List<CsvBindException>();
             _rules = new List<BindRule>();
-            _separator = ';';
+            _delimiter = ';';
         }
 
         /// <summary>
@@ -74,11 +74,11 @@ namespace CsvEnt.Bind
         /// <summary>
         /// Csv data delimiter
         /// </summary>
-        /// <param name="separator"></param>
+        /// <param name="delimiter"></param>
         /// <returns></returns>
-        public CsvBinder<T> WithSeparator(char separator)
+        public CsvBinder<T> WithDelimiter(char delimiter)
         {
-            _separator = separator;
+            _delimiter = delimiter;
 
             return this;
         }
@@ -120,7 +120,7 @@ namespace CsvEnt.Bind
                         continue;
                     }
 
-                    var currentLine = currentLineStr.Split(_separator);
+                    var currentLine = currentLineStr.Split(_delimiter);
 
                     var newEntity = new T();
                     var succesMap = true;
