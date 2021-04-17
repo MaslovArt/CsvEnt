@@ -8,9 +8,8 @@ namespace CsvEnt.Write
     /// </summary>
     internal class WriteRule
     {
-        internal WriteRule(int excelColInd, PropertyInfo prop, Func<object, string> map)
+        internal WriteRule(PropertyInfo prop, Func<object, string> map)
         {
-            ColInd = excelColInd;
             Prop = prop;
             Map = map;
         }
@@ -19,11 +18,6 @@ namespace CsvEnt.Write
         /// Entity property
         /// </summary>
         internal PropertyInfo Prop { get; set; }
-
-        /// <summary>
-        /// Csv row column index
-        /// </summary>
-        internal int ColInd { get; set; }
 
         /// <summary>
         /// Entity prop to csv value

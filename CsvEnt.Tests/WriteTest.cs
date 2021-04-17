@@ -2,11 +2,8 @@
 using CsvEnt.Tests.Models;
 using CsvEnt.Write;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace CsvEnt.Tests
 {
@@ -21,24 +18,24 @@ namespace CsvEnt.Tests
             try
             {
                 new CsvWriter<TestItem>()
-                    .AddRule(e => e.Int, 0)
-                    .AddRule(e => e.NullInt, 1)
-                    .AddRule(e => e.Double, 2)
-                    .AddRule(e => e.NullDouble, 3)
-                    .AddRule(e => e.Bool, 4)
-                    .AddRule(e => e.NullBool, 5)
-                    .AddRule(e => e.Date, 6, v => v.ToString("dd.MM.yyyy"))
-                    .AddRule(e => e.NullDate, 7, v => v?.ToString("dd.MM.yyyy"))
-                    .AddRule(e => e.String, 8)
-                    .AddRule(e => e.Enum, 9)
+                    .AddRule(e => e.Int)
+                    .AddRule(e => e.NullInt)
+                    .AddRule(e => e.Double)
+                    .AddRule(e => e.NullDouble)
+                    .AddRule(e => e.Bool)
+                    .AddRule(e => e.NullBool)
+                    .AddRule(e => e.Date, v => v.ToString("dd.MM.yyyy"))
+                    .AddRule(e => e.NullDate, v => v?.ToString("dd.MM.yyyy"))
+                    .AddRule(e => e.String)
+                    .AddRule(e => e.Enum)
                     .AddColumnsTitles(new string[]
                     {
-                    "Int", "NullInt",
-                    "Double", "NullDouble",
-                    "Bool", "NullBool",
-                    "Date", "NullDate",
-                    "String",
-                    "Enum"
+                        "Int", "NullInt",
+                        "Double", "NullDouble",
+                        "Bool", "NullBool",
+                        "Date", "NullDate",
+                        "String",
+                        "Enum"
                     })
                     .WithDelimiter(';')
                     .Write(Expected.Data, testFilePath);
@@ -59,16 +56,16 @@ namespace CsvEnt.Tests
             try
             {
                 new CsvWriter<TestItem>()
-                    .AddRule(e => e.Int, 0)
-                    .AddRule(e => e.NullInt, 1)
-                    .AddRule(e => e.Double, 2)
-                    .AddRule(e => e.NullDouble, 3)
-                    .AddRule(e => e.Bool, 4)
-                    .AddRule(e => e.NullBool, 5)
-                    .AddRule(e => e.Date, 6, v => ((DateTime)v).ToString("dd.MM.yyyy"))
-                    .AddRule(e => e.NullDate, 7, v => ((DateTime?)v)?.ToString("dd.MM.yyyy"))
-                    .AddRule(e => e.String, 8)
-                    .AddRule(e => e.Enum, 9)
+                    .AddRule(e => e.Int)
+                    .AddRule(e => e.NullInt)
+                    .AddRule(e => e.Double)
+                    .AddRule(e => e.NullDouble)
+                    .AddRule(e => e.Bool)
+                    .AddRule(e => e.NullBool)
+                    .AddRule(e => e.Date, v => v.ToString("dd.MM.yyyy"))
+                    .AddRule(e => e.NullDate, v => v?.ToString("dd.MM.yyyy"))
+                    .AddRule(e => e.String)
+                    .AddRule(e => e.Enum)
                     .WithDelimiter(';')
                     .Write(Expected.Data, testFilePath);
 

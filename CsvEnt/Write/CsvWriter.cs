@@ -42,16 +42,13 @@ namespace CsvEnt.Write
         /// <param name="colIndex">Line column index</param>
         /// <param name="map">Map func</param>
         /// <returns></returns>
-        public CsvWriter<T> AddRule<P>(
-            Expression<Func<T, P>> propName, 
-            int colIndex, 
-            Func<P, string> map = null)
+        public CsvWriter<T> AddRule<P>(Expression<Func<T, P>> propName, Func<P, string> map = null)
         {
             var prop = TypeExtentions.GetProperty(propName);
             if (map == null)
-                _rules.Add(new WriteRule(colIndex, prop, null));
+                _rules.Add(new WriteRule(prop, null));
             else
-                _rules.Add(new WriteRule(colIndex, prop, (v) => map((P)v)));
+                _rules.Add(new WriteRule(prop, (v) => map((P)v)));
 
             return this;
         }
