@@ -5,7 +5,7 @@ CsvEnt
 **CsvEnt** is a simple library to make working with csv easier. It helps bind files to entities and create files based on entities.
 
 CsvEnt can be useful for these scenarios:
-- bind csv file to entities
+- read file to entities
 - write entities to file
 
 Usage
